@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package racehub_iracing_udp;
+
+import "racehub.proto";
+
+message iRacingMessage {
+  repeated Car cars = 1;
+  repeated Participant participants = 2;
+  Session session = 3;
+}
+

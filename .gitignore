@@ -1,0 +1,18 @@
+.venv/
+.vscode/
+test_data/
+
+*.pyc
+**/__pycache__/
+
+build/
+dist/
+
+racehubclient_version.txt
+racehubworker_version.txt
+
+test.ipynb
+.DS_Store
+RaceHub Installer.exe
+
+*.exe

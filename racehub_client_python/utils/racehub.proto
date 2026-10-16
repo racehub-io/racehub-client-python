@@ -1,0 +1,194 @@
+syntax = "proto3";
+
+package racehub;
+
+service Broadcaster {
+    rpc Chat(stream StreamMessage) returns (stream StreamMessage);
+}
+
+// This is the 'envelope' that can contain various sub-messages
+message StreamMessage {
+    // The "context" field is optional—could hold user ID, correlation ID, or other metadata
+    string context = 1;
+  
+    // Now we define a 'oneof' block that enumerates possible submessage types.
+    oneof payload {
+      FooMessage foo = 2;
+      BarMessage bar = 3;
+      BazMessage baz = 4;
+    }
+  }
+  
+  // Example typed sub-messages:
+  message FooMessage {
+    string foo_text = 1;
+    int32 foo_count = 2;
+  }
+  
+  message BarMessage {
+    bool bar_flag = 1;
+  }
+  
+  message BazMessage {
+    double baz_value = 1;
+    string baz_comment = 2;
+  }
+
+// message StreamMessage {
+//     string client_id = 1;
+  
+//     oneof payload {
+//       WeatherList weather = 2;
+//       ParticipantList participants = 3;
+//     }
+// }
+
+message WeatherList {
+    repeated Weather weather = 1;
+}
+
+message Car {
+    int32 index = 1;
+    uint64 timestamp = 2;
+    float distance = 3;
+    float speed = 4;
+    float throttle = 5;
+    float brake = 6;
+    float clutch = 7;
+    float engine_rpm = 8;
+    int32 gear = 9;
+    float steering_angle = 10;
+    float lap_time = 11;
+    float lap_distance = 12;
+    float total_distance = 13;
+    float fuel = 14;
+    float fuel_capacity = 15;
+    float wheel_speed_fl = 16;
+    float wheel_speed_fr = 17;
+    float wheel_speed_rl = 18;
+    float wheel_speed_rr = 19;
+    float tyre_slip_angle_fl = 20;
+    float tyre_slip_angle_fr = 21;
+    float tyre_slip_angle_rl = 22;
+    float tyre_slip_angle_rr = 23;
+    float tyre_slip_ratio_fl = 24;
+    float tyre_slip_ratio_fr = 25;
+    float tyre_slip_ratio_rl = 26;
+    float tyre_slip_ratio_rr = 27;
+    float tyre_surface_temperature_fl = 28;
+    float tyre_surface_temperature_fr = 29;
+    float tyre_surface_temperature_rl = 30;
+    float tyre_surface_temperature_rr = 31;
+    float tyre_inner_temperature_fl = 32;
+    float tyre_inner_temperature_fr = 33;
+    float tyre_inner_temperature_rl = 34;
+    float tyre_inner_temperature_rr = 35;
+    float tyre_pressure_fl = 36;
+    float tyre_pressure_fr = 37;
+    float tyre_pressure_rl = 38;
+    float tyre_pressure_rr = 39;
+    float tyre_weight_fl = 40;
+    float tyre_weight_fr = 41;
+    float tyre_weight_rl = 42;
+    float tyre_weight_rr = 43;
+    float brake_temperature_fl = 44;
+    float brake_temperature_fr = 45;
+    float brake_temperature_rl = 46;
+    float brake_temperature_rr = 47;
+}
+
+enum WeatherCondition {
+    UNKNOWN = 0;
+    CLEAR = 1;
+    LIGHT_CLOUDS = 2;
+    OVERCAST = 3;
+    LIGHT_RAIN = 4;
+    HEAVY_RAIN = 5;
+    STORM = 6;
+  }
+
+message Weather {
+    WeatherCondition weather_condition = 1;
+    int32 time_offset_seconds = 2;
+    float air_temperature = 3;
+    float track_temperature = 4;
+    int32 rain_intensity = 5;
+    int32 snow_intensity = 6;
+    int32 fog_intensity = 7;
+    int32 wind_speed = 8;
+    int32 wind_direction = 9;
+    float accuracy = 10;
+}
+
+message Session {
+    string session_id = 1;
+    string series = 2;
+    string event_name = 3;
+    string session_type = 4;
+    repeated Weather weather = 5;
+}
+
+message MarshalZoneDefinition {
+    int32 zone_number = 1;
+    float zone_start = 2;
+    float zone_end = 3;
+}
+
+enum MarshalZoneStatus {
+    UNKNOWN_MARSHAL_ZONE_STATUS = 0;
+    NO_FLAG = 1;
+    GREEN_FLAG = 2;
+    YELLOW_FLAG = 3;
+    AMBER_FLAG = 4;
+    RED_FLAG = 5;
+}
+
+message MarshalZone {
+    int32 zone_number = 1;
+    MarshalZoneStatus status = 2;
+}
+
+message CircuitDefinition {
+    string track_name = 1;
+    float track_length = 2;
+    repeated MarshalZone marshal_zones = 3;
+    int32 pit_speed_limit = 4;
+}
+
+enum SafetyCarStatus {
+    UNKNOWN_SAFETY_CAR_STATUS = 0;
+    NO_SAFETY_CAR = 1;
+    SAFETY_CAR_ON_TRACK = 2;
+    SAFETY_CAR_IN_PIT = 3;
+    VSC_ACTIVE = 4;
+    VSC_ENDING = 5;
+}
+
+message Timing {
+    float session_time_elapsed = 1;
+    int32 time_of_day = 2;
+    int32 session_duration = 3;
+    int32 total_laps = 4;
+    int32 laps_completed = 5;
+    SafetyCarStatus safety_car_status = 6;
+    repeated MarshalZone marshal_zones = 7;
+}
+
+message Name {
+    string first_name = 1;
+    string last_name = 2;
+    string abbreviation = 3;
+}
+
+message Participant {
+    int32 index = 1;
+    Name driver_name = 2;
+    Name player_name = 3;
+    int32 car_number = 4;
+    string team_name = 5;
+    string nationality = 6;
+}
+
+message ParticipantList {
+    repeated Participant participants = 1;
+}

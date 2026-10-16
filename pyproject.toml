@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "racehub-client-python"
+version = "0.1.0"
+description = ""
+authors = ["RaceHub"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+client = "racehub_client_python.client:main"
+worker = "racehub_client_python.worker:main"
+build = "racehub_client_python.pyinstaller:install"
+test_f12024_recorder = "racehub_client_python.recorders.f12024recorder:test"
+test_iracing_recorder = "racehub_client_python.recorders.iracingrecorder:test"
+test_parse_partition = "racehub_client_python.workers.parser:test"
+test_post_process = "racehub_client_python.workers.postprocess:test"
+test_atlas_tcp = "racehub_client_python.recorders.atlas_tcp.sample:main"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+asyncio = "^3.4.3"
+websockets = "^12.0"
+pandas = "^2.2.2"
+protobuf = "^5.26.1"
+grpcio = "^1.64.1"
+grpcio-tools = "^1.64.1"
+setuptools = "^70.2.0"
+requests = "^2.32.3"
+pyarrow = "^18.0.0"
+pystray = "^0.19.5"
+Pillow = "^11.0.0"
+numpy = "^2.2.1"
+matplotlib = "^3.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
